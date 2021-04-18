@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>2342{{name}}13123</h1>
+        <div>
+            <p v-html="a">
+                <div></div>
+            </p>
+        </div>
+        <h3 id="tt" class="tt" v-text="age"></h3>
+        <input type="button" v-on:click="updata" value="更新" />
+    </div>
+    <script src="./vue.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script> -->
+    <script>
+        var dom = document.getElementsByTagName("h1");
+        console.log(dom[0].textContent)
+        let reg = /\{\{(.*)\}\}/;
+        reg.exec(dom[0].textContent);
+        console.log(RegExp["$'"])
+        new Vue({
+            el: "#app",
+            data: {
+                name: "蒋鹏杰",
+                age: 22,
+                a: "<a href='http://www.baidu.com'>百度一下</a>"
+            },
+            methods: {
+                updata() {
+                    console.log(this.name)
+                    this.name = "jpj"
+                    console.log(this.name)
+                    this.age = 18
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
