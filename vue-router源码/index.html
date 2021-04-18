@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-router源码学习</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/world">world</router-link>
+        <router-link to="/mmdjj">mmdjj</router-link>
+        <button @click="$router.push('/world')">world</button>
+        <button @click="$router.push('/mmdjj')">mmdjj</button>
+        <h1>hello,</h1>
+        <router-view />
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.0/vue.min.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.0.5/vue-router.min.js"></script> -->
+    <script src="./vue-router.js"></script>
+    <script>
+        Vue.use(VueRouter)
+        const World = {
+            template: '<h1>World</h1>'
+        }
+
+        const Mmdjj = {
+            template: '<h1>Mmdjj</h1>'
+        }
+        
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: '/world',
+                    name: 'World',
+                    component: World
+                },
+                {
+                    path: '/mmdjj',
+                    name: 'Mmdjj',
+                    component: Mmdjj
+                }
+            ]
+        })
+
+        new Vue({
+            el: '#app',
+            router,
+            data: {
+                name: 'mmdjj'
+            },
+            components: {
+                World,
+                Mmdjj
+            }
+        })
+    </script>
+</body>
+</html>
