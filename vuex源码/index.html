@@ -12,6 +12,10 @@
         <button @click="$store.dispatch('change_name')">dispatch name</button>
         <h1>hello,</h1>
         <h1>{{$store.state.name}}</h1>
+        <button @click="$store.commit('CHANGE_TEST_NAME')">module commit name</button>
+        <button @click="$store.dispatch('change_test_name')">module dispatch name</button>
+        <h1>hello,</h1>
+        <h1>{{$store.state.test.name}}</h1>
     </div>
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.0/vue.min.js"></script>
     <!-- <script src="https://cdn.bootcdn.net/ajax/libs/vuex/3.0.0/vuex.js"></script> -->
@@ -26,13 +30,39 @@
                 CHANGE_NAME: state => state.name = 'mmdjj'
             },
             actions: {
-                change_name: ({ commit }) => commit('CHANGE_NAME')
+                change_name: ({ commit }) => setTimeout(() => commit('CHANGE_NAME'), 2000)
+            },
+            // getters: {
+            //     get_name: state => {
+            //         return state.name
+            //     }
+            // },
+            modules: {
+                test: {
+                    state: {
+                        name: 'test'
+                    },
+                    mutations: {
+                        CHANGE_TEST_NAME: state => state.name = 'mmdjj test'
+                    },
+                    actions: {
+                        change_test_name: ({ commit }) => setTimeout(() => commit('CHANGE_TEST_NAME'), 2000)
+                    },
+                    getters: {
+                        get_name: state => {
+                            return state.name
+                        }
+                    }
+                }
             }
         })
 
         new Vue({
             el: '#app',
-            store
+            store,
+            mounted () {
+                console.log(this.$store)
+            }
         })
     </script>
 </body>
