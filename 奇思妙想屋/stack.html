@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stack实践</title>
+  <style>
+    .bg {
+      background: #CAE5E8;
+      color: #ccc;
+    }
+    .flex {
+      display: flex;
+      justify-content: space-between;
+    }
+    .padding {
+      padding: 10px;
+    }
+    .margin {
+      margin: 10px;
+    }
+    .radius {
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="flex">
+      <div class="bg margin padding radius">上一页</div>
+      <div class="margin padding">3</div>
+      <div class="bg margin padding radius">下一页</div>
+    </div>
+  </div>
+  <div>
+    <div class="flex">
+      <div class="bg margin padding radius" style="width: 65vw;height: 10vh;"></div>
+      <div style="height: 10vh;">
+        <div class="bg margin padding radius">标记</div>
+        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="bg margin padding radius" style="width: 65vw; height: 10vh;"></div>
+      <div style="height: 10vh;">
+        <div class="bg margin padding radius">标记</div>
+        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="bg margin padding radius" style="width: 65vw; height: 10vh;"></div>
+      <div style="height: 10vh;">
+        <div class="bg margin padding radius">标记</div>
+        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data () {
+        return {
+          data: 1
+        }
+      }
+    })
+  </script>
+</body>
+</html>
