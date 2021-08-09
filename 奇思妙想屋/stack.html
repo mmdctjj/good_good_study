@@ -8,7 +8,7 @@
   <style>
     .bg {
       background: #CAE5E8;
-      color: #ccc;
+      color: #fff;
     }
     .flex {
       display: flex;
@@ -27,45 +27,113 @@
 </head>
 <body>
   <div id="app">
+  
     <div class="flex">
-      <div class="bg margin padding radius">上一页</div>
+      <div @click="onLasts" class="bg margin padding radius">上一页</div>
       <div class="margin padding">3</div>
-      <div class="bg margin padding radius">下一页</div>
+      <div @click="onNexts" class="bg margin padding radius">下一页</div>
     </div>
+  
+    <div v-if="list.length" v-for="item in list" key="item" class="flex">
+      <div class="bg margin padding radius" style="width: 68vw;height: 10vh;">
+        {{item}}
+      </div>
+      <div style="height: 10vh;">
+        <div @click="onAdd({id: item})" class="bg margin padding radius">标记</div>
+        <div @click="onDel(item.id)" class="bg margin padding radius">清标</div>
+      </div>
+    </div>
+  
+    <div v-if="!list.length" class="bg margin padding radius">null</div>
+  
   </div>
-  <div>
-    <div class="flex">
-      <div class="bg margin padding radius" style="width: 65vw;height: 10vh;"></div>
-      <div style="height: 10vh;">
-        <div class="bg margin padding radius">标记</div>
-        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
-      </div>
-    </div>
-    <div class="flex">
-      <div class="bg margin padding radius" style="width: 65vw; height: 10vh;"></div>
-      <div style="height: 10vh;">
-        <div class="bg margin padding radius">标记</div>
-        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
-      </div>
-    </div>
-    <div class="flex">
-      <div class="bg margin padding radius" style="width: 65vw; height: 10vh;"></div>
-      <div style="height: 10vh;">
-        <div class="bg margin padding radius">标记</div>
-        <div class="bg margin padding radius" style="margin-top: 20px;">删除</div>
-      </div>
-    </div>
-  </div>
-  <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="./stack.js"></script>
+  
   <script>
-    new Vue({
-      el: '#app',
-      data () {
-        return {
-          data: []
+    const {onMounted, reactive, watch} = Vue
+    
+    const initData = () => {
+      return [1, 1, 1].map(() => Math.random())
+    }
+    
+    Vue.createApp({
+      setup () {
+        // 渲染列表
+        const list = reactive(initData())
+        
+        // 实例化
+        const history = new HistoryStack()
+
+        // 将变动保存在本地
+        const copy = () => localStorage.setItem('name', JSON.stringify(history))
+
+        // 初始化缓存
+        if (!localStorage.getItem('name')) {
+          copy()
         }
+        
+        // 将缓存和数据结构绑定
+        history.copy(JSON.parse(localStorage.getItem('name')))
+
+        // 恢复下，因为推出前可能是在上一页状态中，并保存
+        history.close()
+        copy()
+
+        // 标记时调用
+        const add = tag => history.push(tag)
+
+        // 取消标记时调用
+        const del = id => history.delete(id)
+
+        // 上一页调用
+        const lasts = size => history.pops(size)
+
+        // 下一页调用
+        const nexts = size => history.pushs(size)
+
+        // 关闭时调用
+        const close = () => history.close()
+        
+        // 标记时调用
+        const onAdd = tag => setTimeout(() => {
+          add(tag)
+          copy()
+        }, 100)
+
+        // 取消标记按钮
+        const onDel = id => setTimeout(() => {
+          del(id)
+          copy()
+        }, 100)
+
+        // 上一页按钮调用
+        const onLasts = () => {
+          list.length = 0
+          if (history.history.length > 0) {
+            list.push(...lasts(3))
+            copy()
+          }
+        }
+
+        // 下一页按钮调用
+        const onNexts = () => {
+          list.length = 0
+          if (history.memory.length > 0) {
+            list.push(...nexts(3))
+            copy()
+          } else {
+            list.push(...initData())
+          }
+        }
+
+        // 关闭事件时调用
+        onMounted(() => close())
+
+        return {list, onAdd, onDel, onLasts, onNexts}
       }
-    })
+    }).mount('#app')
   </script>
 </body>
 </html>
