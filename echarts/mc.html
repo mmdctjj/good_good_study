@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test</title>
+</head>
+
+<body>
+  <img id="img" src="./2.png" />
+  <canvas id="canvas"></canvas>
+  <div id="echarts"></div>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.1/dist/echarts.min.js"></script>
+  <script>
+    // 获取画布
+    const canvas = document.getElementById('canvas')
+    const ctx = canvas.getContext('2d')
+
+    const image = document.getElementById('img')
+
+    image.onload = () => {
+      console.log('start')
+      const height = img.height
+      const width = img.width
+      console.log(width, height)
+      canvas.setAttribute("height", height)
+      canvas.setAttribute("width", width)
+
+
+      ctx.drawImage(image, 0, 0)
+      
+      const imgData = ctx.getImageData(0, 0, width, height).data
+
+      const rgba = []
+      const n = 10
+
+      // 获取像素值
+      for (let i = 0; i < imgData.length; i = i + 4) {
+
+        // r, g, b, a
+        rgba.push([imgData[i], imgData[i + 1], imgData[i + 2], imgData[i + 3]])
+
+      }
+
+      // 按行排列
+      const rowPx = new Array(height)
+        .fill(null)
+        .map((_, idx) => rgba.slice(width * idx, width * (idx + 1)))
+
+      const data_ = rowPx
+        .filter((row, idx) => (idx & n) === 0) // 行过滤
+        .map((row, idx) => row.filter((px, idy) => (idy % n) === 0)) // 列过滤
+      
+       // 初始化坐标轴数据
+      const xdata = new Array(data_[0].length).fill(null).map((_, idx) => idx)
+      const ydata = new Array(data_.length).fill(null).map((_, idx) => idx)
+
+      const data = data_
+        .map((row, idx) => row.map((px, idy) => [
+          idy,
+          data_.length - idx,
+          ...px
+        ]))
+        .reduce((pre, curr) => pre.concat(curr), [])
+      console.log(data_)
+      // echarts实例
+      const myChart = echarts.init(document.getElementById('echarts'));
+
+      // 各加补充50坐标轴空间
+      myChart.resize({width: width + 50, height: height + 50})
+
+      const option = {
+        tooltip: {},
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          show: false,
+          top: 0
+        },
+        xAxis: {
+          type: "category",
+          data: xdata
+        },
+        yAxis: {
+          type: "category",
+          data: ydata
+        },
+        series: [{
+          type: "heatmap",
+          data: data.map(value => ({
+            value,
+            itemStyle: {
+              color: `rgba(${value[2]}, ${value[3]}, ${value[4]}, ${1})`
+            }
+          })),
+          progressive: 1000,
+          animation: false
+        }]
+      }
+
+      myChart.setOption(option);
+
+    }
+  </script>
+</body>
+
+</html>
