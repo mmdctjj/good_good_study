@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>卡片弹出</title>
+    <style>
+        .pic {
+            width: 97%;
+            height: 120px;
+            margin: 20px 5px;
+            border-radius: 8px;
+            background: #e0ebec;
+        }
+        .item {
+            margin: 5px;
+            padding: 0px;
+            overflow: hidden;
+        }
+        .item div {
+            display: inline;
+            float: left;
+        }
+        .flex {
+            display: flex;
+            justify-content: space-between
+        }
+        .card {
+            width: 65px;
+            height: 65px;
+            margin: 15px 12px;
+            margin-top: 0px;
+            border-radius: 8px;
+            background: #e0ebec;
+        }
+        .item::after {
+            content: "";
+            clear: both;
+            display: block;
+        }
+        .square {
+            width: 20%;
+            height: 75px;
+            background: #e0ebec;
+            border-radius: 8px;
+        }
+        .content {
+            width: 79%;
+        }
+        .content div {
+            margin: 15px;
+            margin-top: 0px;
+            padding: 0px;
+            width: 95%;
+            border-radius: 8px;
+            line-height: 30px;
+            background: #e0ebec;
+        }
+        .content div:last-child {
+            width: 65%;
+            background: #e0ebec;
+        }
+        .btn {
+          position: fixed;
+          right: 30px;
+          bottom: 60px;
+          width: 100px;
+          height: 40px;
+          background: #99D1D3;
+          border-radius: 8px;
+        }
+        .btnCard{
+          position: fixed;
+          right: 30px;
+          bottom: 105px;
+          width: 220px;
+          height: 250px;
+          background: #99D1D3;
+          border-radius: 8px;
+        }
+        
+        @keyframes one-in {
+          from {
+            width: 100px;
+            height: 0px;
+            bottom: 55px;
+          }
+          to {
+            width: 220px;
+            height: 250px;
+          }
+        }
+        @keyframes one-out {
+          from {
+            width: 220px;
+            height: 250px;
+          }
+          to {
+            width: 100px;
+            height: 0px;
+            bottom: 55px;
+          }
+        }
+        .v-leave-to {
+          animation: one-out 0.8s infinite;
+          animation-iteration-count: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="pic"></div>
+        <div class="flex">
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+        <div class="item" v-for="item in arr" v-bind:data-index="item" v-bind:key="item">
+          <div class="square"></div>
+          <div class="content">
+              <div>&nbsp;</div>
+              <div>&nbsp;</div>
+          </div>
+        </div>
+        <div class="btn" @click="clickBtn"></div>
+        <transition
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+            v-on:="leave"
+        >
+          <div v-show="show1" v-bind:css="false" class="btnCard"></div>
+        </transition>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                show1: false,
+                show2: false,
+                show3: false,
+                arr: [1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            methods: {
+                beforeEnter (el) {
+                  el.style.opacity = 0
+                  el.style.transition = 'opacity 1s'
+                },
+                enter (el, done) {
+                  setTimeout(() => {
+                    el.style.opacity = 1
+                    el.style.animation = 'one-in 0.8s infinite'
+                    el.style['animation-iteration-count'] = 1
+                    done()
+                  }, 10)
+                  
+                },
+                beforeLeave (el) {
+                  setTimeout(() => {
+                    el.style.opacity = 1
+                    el.style.transition = 'dispaly 1s'
+                    el.style.animation = 'one-out 0.8s infinite'
+                    el.style['animation-iteration-count'] = 1
+                  }, 10)
+                },
+                leave (el, done) {
+                  setTimeout(() => {
+                    el.style.opacity = 1
+                    el.style.animation = 'one-out 0.8s infinite'
+                    el.style['animation-iteration-count'] = 1
+                    done()
+                  }, 10)
+                },
+                clickBtn () {
+                  this.show1 = !this.show1
+                }
+            },
+            mounted () {
+              setTimeout(() => {
+                this.show3 = !this.show3
+              })
+            }
+        })
+    </script>
+</body>
+
+</html>

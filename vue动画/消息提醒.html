@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>消息提醒</title>
+    <style>
+        .btn {
+          position: fixed;
+          right: 30px;
+          bottom: 60px;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: 8px solid #5c9799;
+          background: #99D1D3;
+          animation: card 3s ease 0s infinite;
+        }
+        .btn1 {
+          background: #5c9799;
+          animation: news 3s ease 0.2s infinite;
+        }
+        .btn2 {
+          background: #5c9799;
+          animation: news 3s ease 0.8s infinite;
+        }
+        @keyframes news {
+          from {
+            transform: scale(0);
+            opacity: 1;
+          }
+          to {
+            transform: scale(1.8);
+            opacity: 0;
+          }
+        }
+        @keyframes card {
+          0% {
+            transform: scale(1);
+          }
+          70% {
+            transform: scale(1);
+          }
+          85% {
+            transform: scale(1.2);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+    </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="card">
+      <div class="btn btn1"></div>
+      <div class="btn btn2"></div>
+      <div class="btn"></div>
+    </div>
+  </div>
+</body>
+
+</html>

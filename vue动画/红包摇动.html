@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>红包摇动</title>
+    <style>
+        .btn {
+          position: fixed;
+          right: 10px;
+          bottom: 40%;
+          width: 50px;
+          height: 70px;
+          background: #f16767;
+          border-radius: 8px;
+          animation: yao 1.5s  0s infinite;
+        }
+        .btn::after{
+          content: '';
+          position: absolute;
+          width: 25px;
+          height: 25px;
+          background: #f1d165;
+          border-radius: 50%;
+          left: 0;
+          right: 0;
+          top: 15px;
+          margin: auto;
+        }
+        .btn::before {
+          content: '';
+          position: absolute;
+          z-index: 100;
+          width: 50px;
+          height: 25px;
+          border-bottom-left-radius: 50%;
+          border-bottom-right-radius: 50%;
+          border-bottom: #f1d165 solid 5px;
+        }
+        @keyframes yao {
+          0% {
+            transform: rotate(0deg);
+          }
+          69% {
+            transform: rotate(0deg);
+          }
+          70% {
+            transform: rotate(10deg);
+          }
+          85% {
+            transform: rotate(-10deg);
+          }
+          100% {
+            transform: rotate(0deg);
+          }
+        }
+    </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="btn"></div>
+  </div>
+</body>
+
+</html>

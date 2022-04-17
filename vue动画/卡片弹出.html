@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>卡片弹出</title>
+    <style>
+        .btn {
+          position: fixed;
+          right: 30px;
+          bottom: 60px;
+          width: 100px;
+          height: 40px;
+          background: #99D1D3;
+          border-radius: 8px;
+        }
+        .btnCard{
+          position: fixed;
+          right: 30px;
+          bottom: 105px;
+          width: 220px;
+          height: 250px;
+          background: #99D1D3;
+          border-radius: 8px;
+        }
+        .card-in-out-enter {
+          opacity: 0;
+        }
+        .card-in-out-enter-active {
+          transition: opacity .5s;
+          animation: one-in 0.5s infinite;
+          animation-iteration-count: 1;
+        }
+        .card-in-out-leave-active {
+          transition: opacity .5s;
+          animation: one-out 0.5s infinite;
+          animation-iteration-count: 1;
+        }
+        @keyframes one-in {
+          from {
+            width: 100px;
+            height: 0px;
+            bottom: 55px;
+          }
+          to {
+            width: 220px;
+            height: 250px;
+          }
+        }
+        @keyframes one-out {
+          from {
+            width: 220px;
+            height: 250px;
+          }
+          to {
+            width: 90px;
+            height: 0px;
+            bottom: 60px;
+          }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="btn" @click="clickBtn"></div>
+        <transition name="card-in-out">
+          <div v-show="show1" v-bind:css="false" class="btnCard">
+            <div v-show="show1" class="item">
+              <div class="content" style="padding: 5px;">
+              </div>
+            </div>
+          </div>
+        </transition>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                show1: false,
+                show2: false,
+                show3: false,
+                arr: [1, 2, 3, 4, 5, 6, 7, 8]
+            },
+            methods: {
+              clickBtn () {
+                this.show1 = !this.show1
+              }
+            },
+            mounted () {
+              setTimeout(() => {
+                this.show3 = !this.show3
+              })
+            }
+        })
+    </script>
+</body>
+
+</html>

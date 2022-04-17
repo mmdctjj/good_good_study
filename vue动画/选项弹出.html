@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选项弹出</title>
+    <style>
+        .btn {
+          position: fixed;
+          right: 0;
+          left: 0;
+          margin: auto;
+          bottom: 10px;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: #99D1D3;
+        }
+        .btn-click {
+          animation: btn-click 0.5s ease 0s 1;
+        }
+        @keyframes btn-click {
+          0% {
+            transform: scale(1);
+          }
+          40% {
+            transform: scale(0.7);
+          }
+          70% {
+            transform: scale(1.2);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+        @keyframes card-in {
+          0% {
+          }
+          100% {
+            bottom: 80px;
+          }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="card">
+          <transition-group
+            name="more"
+            v-bind:css="false"
+            v-on:before-enter="beforeEnter"
+            v-on:enter="enter"
+          >
+            <template v-if="show1">
+              <div class="btn" v-for="item in 4" :data-index="item" :key="item"></div>
+            </template>
+          </transition-group>
+          <div @click="clickBtn" :class="style"></div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                show1: false,
+                style: ['btn']
+            },
+            methods: {
+              clickBtn () {
+                this.show1 = !this.show1
+                this.style = ['btn', 'btn-click']
+                setTimeout(() => {
+                  this.style = ['btn']
+                }, 501)
+              },
+              beforeEnter (el) {
+                  el.style.opacity = 0
+              },
+              enter (el, done) {
+                  // console.log(el.dataset.index)
+                  let delay = el.dataset.index * 400
+                  setTimeout(()=>{
+                      el.style.transition = 'opacity 0.4s'
+                      el.style.transition =  `bottom 0.4s`
+                      el.style.opacity = 1
+                      // el.style['animation-duration'] = '0.4s'
+                      el.style.animation = 'card-in 0.4s ease'
+                      done()
+                  }, 200)
+              }
+            },
+            mounted () {
+              setTimeout(() => {
+                this.show3 = !this.show3
+              })
+            }
+        })
+    </script>
+</body>
+
+</html>

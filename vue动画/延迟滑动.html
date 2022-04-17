@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>延迟滑动</title>
+    <style>
+      *{
+        margin: 0px;
+        padding: 0px;
+        border-radius: 10px;
+      }
+      .img {
+        width: 100%;
+        text-align: center;
+        margin-top: 40%;
+      }
+      .img img {
+        width: calc(100% - 40px);
+        margin: 20px
+      }
+      .card {
+        position: fixed;
+        width: 100%;
+        height: 20%;
+        bottom: 5px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 -10px 10px -3px #eee;
+        background: #fefefe;
+      }
+      .card .drap {
+        left: 0;
+        right: 0;
+        margin: 10px auto;
+        width: 60px;
+        height: 10px;
+        border-radius: 4px;
+        background: #99D1D3;
+        opacity: 0.4;
+      }
+      .card .item {
+        position: fixed;
+        width: calc(25vw - 50px);
+        height: calc(25vw - 50px);
+        background: #99D1D3;
+        margin: 10px 25px;
+        bottom: 5%;
+      }
+      .card .item:nth-child(3) {
+        left: calc(25vw);
+      }
+      .card .item:nth-child(4) {
+        left: calc(75vw - 100px);
+      }
+      .card .item:nth-child(5) {
+        left: calc(100vw - 100px);
+      }
+      .card .list {
+        position: fixed;
+        width: calc(50vw - 40px);
+        height: 20%;
+        background: #99D1D3;
+        margin: 20px;
+        top: 95%;
+      }
+      .list:nth-child(6) {
+        left: calc(0px);
+      }
+      .list:nth-child(7) {
+        left: calc(50vw - 10px);
+      }
+      .list .img {
+        width: calc(100% - 40px);
+        height: 100px;
+        background: #d0e8e9;
+        margin: 20px;
+      }
+      .list .title {
+        width: 50vw;
+        height: 40px;
+        margin: 20px;
+        background: #edf8f8;
+      }
+      .list .text {
+        width: 70vw;
+        height: 30px;
+        margin: 20px;
+        background: #d0ecec;
+      }
+      @keyframes height {
+        10% {
+          height: 80px;
+        }
+        100% {
+          height: calc(25vw - 50px);
+        }
+      }
+      @keyframes width {
+        0% {
+          width: 0px;
+        }
+        50% {
+          width: 0px;
+        }
+      }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div ref="img" class="img">
+          <img src="./code.svg" alt="img">
+        </div>
+        <div class="card" ref="card">
+          <div @click="clickBtn" class="drap"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="item"></div>
+          <div class="list" ref="left" @click="clickList($refs.left, 'left')">
+            <div class="img"></div>
+            <transition
+              v-on:before-enter="beforeEnter"
+              v-on:enter="enter"
+            >
+              <span v-if="lShow">
+                <div class="title"></div>
+                <div class="text"></div>
+                <div class="text" style="width: 20vw;"></div>
+              </span>
+            </transition>
+          </div>
+          <div class="list" ref="right" @click="clickList($refs.right, 'right')">
+            <div class="img"></div>
+            <transition
+              v-on:before-enter="beforeEnter"
+              v-on:enter="enter"
+            >
+              <span v-if="rShow">
+                <div class="title"></div>
+                <div class="text"></div>
+                <div class="text" style="width: 20vw;"></div>
+              </span>
+            </transition>
+          </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                show1: false,
+                style: ['btn'],
+                flag: false,
+                rShow: false,
+                lShow: false
+            },
+            methods: {
+              clickBtn () {
+                if (this.flag) return
+                this.$refs.img.style.transition = 'margin 0.8s ease-in-out, width 0.8s ease-in-out'
+                console.log(this.$refs.img.style)
+                setTimeout(() => {
+                  this.$refs.img.style.marginLeft = '0%'
+                }, 400)
+                this.$refs.img.style.marginTop = '0'
+                this.$refs.img.style.marginLeft = '20%'
+                this.$refs.img.style.width = this.$refs.img.style.width === '40%' ? 'calc(100% - 40px)' : '40%'
+                this.$refs.card.style.transition = 'height 0.8s ease-in-out'
+                if (this.$refs.card.style.height === '80%') this.$refs.card.style['transition-delay'] = '0.5s'
+                this.$refs.card.style.height = this.$refs.card.style.height === '80%' ? '20%' : '80%'
+                let delay = 100
+                Array.prototype.forEach.call(this.$refs.card.children, (child, index) => {
+                  if (child.className === 'item') {
+                    delay = delay * index
+                    setTimeout(() => {
+                      child.style.transition = 'bottom 0.8s ease-in-out, top 0.8s ease'
+                      child.style.bottom = child.style.bottom === '65%' ? '5%' : '65%'
+                      child.style.animation = child.style.bottom === '65%' ? `height 1s ease ${delay}ms 1` : ''
+                    }, delay)
+                    delay = 100
+                  } else if (child.className === 'list') {
+                    delay = 100
+                    delay = delay * (index - 5)
+                    child.style.transition = 'top 1.2s'
+                    setTimeout(() => {
+                      if (this.$refs.card.style.height === '80%') child.style['transition-delay'] = '0.4s'
+                      child.style.top = child.style.top === '95%' || child.style.top === '' ? '35%' : '95%'
+                    }, delay)
+                  }
+                })
+              },
+              clickList (dom, flag) {
+                this.flag = !this.flag
+                dom.style.transition = 'width 0.8s, height 0.8s, left 0.6s, zIndex 0.5s'
+                if (flag === 'left') {
+                  if (dom.style.height === '20%' || dom.style.height === '') {
+                    this.lShow = true
+                    dom.style.left = '20vw'
+                    dom.style.zIndex = '100'
+                    setTimeout(() => {
+                      dom.style.left = '0px'
+                    }, 200)
+                    dom.style.width = 'calc(100vw - 40px)'
+                    dom.style.height = '50vh'
+                  } else {
+                    this.lShow = false
+                    dom.style.left = '20vw'
+                    setTimeout(() => {
+                      dom.style.left = '0px'
+                    }, 200)
+                    setTimeout(() => {
+                      dom.style.zIndex = '10'
+                    }, 400)
+                    dom.style.width = 'calc(50vw - 40px)'
+                    dom.style.height = '20%'
+                  }
+                } else {
+                  if (dom.style.height === '20%' || dom.style.height === '') {
+                    this.rShow = true
+                    dom.style.width = 'calc(100vw - 40px)'
+                    dom.style.left = '-10vw'
+                    setTimeout(() => {
+                      dom.style.left = '0px'
+                    }, 200)
+                    dom.style.zIndex = '100'
+                    dom.style.height = '50vh'
+                  } else {
+                    this.rShow = false
+                    dom.style.left = '10vw'
+                    setTimeout(() => {
+                      dom.style.left = 'calc(50vw - 10px)'
+                    }, 200)
+                    setTimeout(() => {
+                      dom.style.zIndex = '10'
+                    }, 400)
+                    dom.style.width = 'calc(50vw - 40px)'
+                    dom.style.height = '20%'
+                  }
+                }
+              },
+              beforeEnter (el) {
+                el.style.opacity = 0
+                el.style.transition = 'opacity 0s'
+              },
+              enter (el, done) {
+                console.log(el.children)
+                Array.prototype.forEach.call(el.children, cdom => {
+                  console.log(cdom)
+                  if (cdom.className === 'title') {
+                    cdom.style.animation = 'width 0.6s'
+                  } else {
+                    cdom.style.animation = 'width 1s'
+                  }
+                })
+              }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>css实现loading动画</title>
+</head>
+
+<body>
+    <style>
+        body {
+            background: #2ecc71;
+        }
+
+        .loading {
+            display: inline;
+            width: 40px;
+            height: 40px;
+            border: 2px #ffffff solid;
+            border-radius: 50%;
+            border-top: 2px solid transparent;
+            animation: rotate 1s linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        .loading-text {
+            color: #ffffff;
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .loading-box {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            margin: 20px;
+            height: 100px;
+            align-items: center;
+            background: #2ecc71;
+        }
+    </style>
+    <style>
+        .point {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ffffff;
+            margin: 3px;
+            animation-name: point;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        .point:nth-child(1) {
+            animation-delay: 0.45s;
+        }
+
+        .point:nth-child(2) {
+            animation-delay: 0.85s;
+        }
+
+        .point:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        @keyframes point {
+
+            0%,
+            20% {
+                width: 15px;
+                height: 15px;
+            }
+
+            55% {
+                width: 0px;
+                height: 0px;
+            }
+
+            90%,
+            100% {
+                width: 15px;
+                height: 15px;
+            }
+        }
+    </style>
+    <style>
+        /*点*/
+        .square {
+            width: 10px;
+            height: 40px;
+            background: #ffffff;
+            margin: 5px;
+            animation: square 1s 0s ease-in-out infinite;
+            animation-direction: normal;
+            animation-play-state: running;
+            animation-fill-mode: forwards;
+        }
+
+        .square:nth-child(1) {
+            animation-delay: 0.15s;
+        }
+
+        .square:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+
+        .square:nth-child(3) {
+            animation-delay: 0.35s;
+        }
+
+        .square:nth-child(4) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes square {
+
+            0%,
+            50% {
+                height: 40px;
+            }
+
+            75% {
+                height: 60px;
+            }
+
+            100% {
+                height: 40px;
+            }
+        }
+    </style>
+    <style>
+        /*圆*/
+        .round {
+            width: 15px;
+            height: 15px;
+            background: #ffffff;
+            display: inline-block;
+            border-radius: 50%;
+            margin: 5px;
+            position: relative;
+            animation: round 0.8s cubic-bezier(0.65, 0.06, 0.95, 0.31) 0s infinite alternate;
+        }
+
+        .round:nth-child(1) {
+            animation-delay: 0.33s;
+        }
+
+        .round:nth-child(2) {
+            animation-delay: 0.66s;
+        }
+
+        .round:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes round {
+
+            0%,
+            25% {
+                top: 0px;
+            }
+
+            100% {
+                top: 20px;
+            }
+        }
+    </style>
+    <style>
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin: 0 auto;
+            position: absolute;
+            animation: circle 1.1s infinite linear;
+        }
+
+        .circle_point {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        .circle:nth-child(1) {
+            transform: rotate(30deg);
+            animation-delay: 0.1s;
+        }
+
+        .circle:nth-child(2) {
+            transform: rotate(60deg);
+            animation-delay: 0.2s;
+        }
+
+        .circle:nth-child(3) {
+            transform: rotate(90deg);
+            animation-delay: 0.3s;
+        }
+
+        .circle:nth-child(4) {
+            transform: rotate(120deg);
+            animation-delay: 0.4s;
+        }
+
+        .circle:nth-child(5) {
+            transform: rotate(150deg);
+            animation-delay: 0.5s;
+        }
+
+        .circle:nth-child(6) {
+            transform: rotate(180deg);
+            animation-delay: 0.6s;
+        }
+
+        .circle:nth-child(7) {
+            transform: rotate(210deg);
+            animation-delay: 0.7s;
+        }
+
+        .circle:nth-child(8) {
+            transform: rotate(240deg);
+            animation-delay: 0.8s;
+        }
+
+        .circle:nth-child(9) {
+            transform: rotate(270deg);
+            animation-delay: 0.9s;
+        }
+
+        .circle:nth-child(10) {
+            transform: rotate(300deg);
+            animation-delay: 1s;
+        }
+
+        .circle:nth-child(11) {
+            transform: rotate(330deg);
+            animation-delay: 1.1s;
+        }
+
+        .circle:nth-child(12) {
+            transform: rotate(360deg);
+            animation-delay: 1.2s;
+        }
+
+        @keyframes circle {
+            form {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+    <div class="loading-box">
+        <svg class="loading">
+            <!-- <div
+          style="border: 2px #ffffff solid;width: 20px;height: 20px;border-bottom: transparent;border-right: transparent"
+        ></div> -->
+        </svg>
+        <div class="loading-text">Loading...</div>
+    </div>
+    <div class="loading-box">
+        <div class="point"></div>
+        <div class="point"></div>
+        <div class="point"></div>
+    </div>
+    <div class="loading-box">
+        <span class="square"></span>
+        <span class="square"></span>
+        <span class="square"></span>
+        <span class="square"></span>
+    </div>
+    <div class="loading-box">
+        <div class="round"></div>
+        <div class="round"></div>
+        <div class="round"></div>
+    </div>
+    <div class="loading-box">
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+        <div class="circle">
+            <div class="circle_point"></div>
+        </div>
+    </div>
+    <div class="loading-box">
+        <div class="gradient"></div>
+        <div class="gradient"></div>
+    </div>
+</body>
+
+</html>

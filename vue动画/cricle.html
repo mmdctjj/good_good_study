@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <style>
+      body {
+        background: #2ecc71;
+      }
+      .loading-box {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        margin: 20px;
+        padding: 0 50px;
+        height: 100px;
+        align-items: center;
+        background: #2ecc71;
+      }
+      .gradient-box {
+        width: 300px;
+        height: 300px;
+      }
+      .gradient {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 5px;
+        position: relative;
+      }
+      .gradient:nth-child(1) {
+        background: rgb(245, 205, 73);
+        animation: gradient1 1s linear 0s infinite;
+      }
+      .gradient:nth-child(2) {
+        background: rgb(240, 80, 155);
+        top: 125px;
+        left: 100px;
+        animation: gradient2 1s linear 0.25s infinite;
+      }
+      @keyframes gradient1 {
+        0% {
+          top: 50px;
+          left: 0px;
+        }
+        25% {
+          top: 125px;
+          left: 100px;
+          width: 30px;
+          height: 30px;
+        }
+        50% {
+          top: 200px;
+          left: 200px;
+          width: 80px;
+          height: 80px;
+        }
+        75% {
+          top: 125px;
+          left: 100px;
+          width: 30px;
+          height: 30px;
+        }
+        100% {
+          top: 50px;
+          left: 0px;
+          width: 80px;
+          height: 80px;
+        }
+      }
+      @keyframes gradient2 {
+        0% {
+          top: 50px;
+          left: 200px;
+        }
+        25% {
+          top: 125px;
+          left: 100px;
+          width: 30px;
+          height: 30px;
+        }
+        50% {
+          top: 200px;
+          left: 0px;
+          width: 80px;
+          height: 80px;
+        }
+        75% {
+          top: 125px;
+          left: 100px;
+          width: 30px;
+          height: 30px;
+        }
+        100% {
+          top: 50px;
+          left: 200px;
+          width: 80px;
+          height: 80px;
+        }
+      }
+    </style>
+    <div class="loading-box">
+      <div class="gradient-box">
+        <div class="gradient"></div>
+        <div class="gradient"></div>
+      </div>
+    </div>
+  </body>
+</html>
