@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+</head>
+
+<body>
+    <script>
+        class Promise {
+            constructor(executor) {
+                if (typeof executor != "function") {
+                    throw TypeError("Promise resolve not function")
+                }
+                // 初始值
+                // 状态
+                this.state = "pending";
+                // 数据
+                this.data = null;
+                // 拒因
+                this.error = null;
+                this.onResolvedCallback = [];
+                this.onRejectedCallback = [];
+                try {
+                    executor(this.resolve.bind(this), this.reject.bind(this));
+                } catch (error) {
+                    this.reject(error);
+                }
+            }
+            resolve(value) {
+                if (this.state === "pending") {
+                    this.state = "fulfilled";
+                    this.data = value;
+                    this.onResolvedCallback.forEach(fn => {
+                        fn(value);
+                    });
+                }
+            }
+            reject(error) {
+                if (this.state === "pending") {
+                    this.state = "reject";
+                    this.error = error;
+                    this.onRejectedCallback.forEach(fn => {
+                        fn(error);
+                    });
+                }
+            }
+            then(onResolve, onReject) {
+                if (typeof onResolve != "function") {
+                    onResolve = function (value) {
+                        return value;
+                    }
+                }
+                if (typeof onReject != "function") {
+                    onReject = function (error) {
+                        return error;
+                    }
+                }
+                if (this.state == "fulfilled") {
+                    setTimeout(() => {
+                        onResolve(this.data)
+                    });
+                }
+                if (this.state == "reject") {
+                    setTimeout(() => {
+                        onReject(this.error);
+                    });
+                }
+                if (this.state == "pending") {
+                    this.onResolvedCallback.push((data) => {
+                        setTimeout(() => {
+                            onResolve(data)
+                        });
+                    });
+                    this.onRejectedCallback.push((error) => {
+                        setTimeout(() => {
+                            onReject(error);
+                        });
+                    })
+                }
+            }
+        }
+
+        new Promise(function (resolve, reject) {
+            setTimeout(() => {
+                resolve(22)
+            });
+        }).then((result) => {
+            console.log(result, '123');
+        }, (err) => {
+            console.log(err);
+        });
+    </script>
+</body>
+
+</html>

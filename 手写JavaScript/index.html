@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>手写bind、apply、call</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        // this指向第一个参数
+        // 执行这个函数
+        Function.prototype.myCall = function (ctx) {
+            ctx = ctx ? Object(ctx) : undefined
+            ctx.originFn = this
+            let args = []
+            for (let i = 1; i < arguments.length; i++) {
+                args.push('arguments[' + i + ']')
+            }
+            let ret = eval('ctx.originFn(' + args + ')')
+            delete ctx.originFn
+            return ret
+        }
+        function test () {
+            console.log(this)
+            console.log(arguments)
+            return this
+        }
+        let ret = test.myCall({a: 1}, 'zs', 'ls')
+        console.log(ret)
+    </script>
+
+</body>
+
+</html>

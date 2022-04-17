@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>防抖和节流</title>
+</head>
+<body>
+    <button id="deb">防抖</button>
+    <button id="thr">节流</button>
+    <script>
+        let deb = document.getElementById("deb");
+        deb.addEventListener("click", debunce(log));
+        let thr = document.getElementById("thr");
+        thr.addEventListener("click", throttle(log));
+        function debunce(fn) {
+            let timeOut = null;
+            return function () {
+                clearTimeout(timeOut);
+                timeOut = setTimeout(()=>{
+                    fn.call(this, arguments);
+                },1000)
+            }
+        }
+        function throttle(fn) {
+            let flag = true;
+            return function () {
+                if (!flag) {
+                    return;
+                }
+                flag = false;
+                setTimeout(()=>{
+                    fn.call(this, arguments);
+                    flag = true;
+                },1000);
+            }
+        }
+        function log () {
+            console.log(11111)
+        }
+    </script>
+</body>
+</html>

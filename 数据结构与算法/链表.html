@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>链表</title>
+</head>
+<body>
+    <script>
+        // 单向链表
+        class Node {
+            constructor(element){
+                this.element = element
+                this.next = null
+            }
+        }
+        class List {
+            constructor(){
+                this.head = new Node("head");
+            }
+            find(element){
+                let currNode = this.head;
+                while(currNode.element != element){
+                    currNode = currNode.next;
+                }
+                return currNode;
+            }
+            findPro(element){
+                let proNode = this.head;
+                while(proNode.next.element != element){
+                    proNode = proNode.next;
+                }
+                console.log(proNode);
+                return proNode;
+            }
+            insert(newElement, element){
+                let newNode = new Node(newElement);
+                this.find(element).next = newNode;
+                console.log(newNode)
+            }
+            remove(element){
+                this.findPro(element).next = this.find(element).next;
+            }
+            display(){
+                let currNode = this.head;
+                while(!(currNode.next == null)){
+                    console.log(currNode.next.element)
+                    currNode = currNode.next;
+                }
+                return
+            }
+        }
+
+        let list = new List();
+        list.insert("body","head");
+        list.insert("foot","body");
+        list.display();
+        // list.find("gg");
+        list.remove("body");
+        list.display();
+        // 双向链表
+        class TwoNode {
+            constructor(element){
+                this.element = element;
+                this.next = null;
+                this.pro = null;
+            }
+        }
+        class TwoList {
+            constructor(){
+                this.head = new TwoNode("head");
+            }
+            find(element){
+                let currNode = this.head;
+                while(currNode.element != element){
+                    if (currNode.next == null) {
+                        
+                    }
+                    currNode = currNode.next;
+                }
+                return currNode;
+            }
+            findLast(){
+                let currNode = this.head;
+                while(currNode.next != null){
+                    currNode = currNode.next;
+                }
+                return currNode;
+            }
+            insert(newElement, element){
+                let newNode = new TwoNode(newElement);
+                let currNode = this.find(element)
+                newNode.next = currNode.next;
+                newNode.pro = currNode;
+                currNode.next = newNode;
+            }
+            remove(element){
+                let currNode = this.find(element);
+                if (!(currNode.next == null)) {
+                    currNode.pro.next = currNode.next;
+                    currNode.next.pro = currNode.pro;
+                    currNode.pro = null;
+                    currNode.next = null;
+                }
+            }
+            display(){
+                let currNode = this.head;
+                while(!(currNode.next == null)){
+                    console.log(currNode.next.element)
+                    currNode = currNode.next;
+                }
+                return
+            }
+            dispReverse(element){
+                let currNode = this.findLast();
+                while(!(currNode.element == "head")){
+                    console.log(currNode.element);
+                    currNode = currNode.pro;
+                }
+                return
+            }
+        }
+        let llist = new TwoList();
+        llist.insert("c","head");
+        llist.insert("b","c");
+        llist.insert("f","b");
+        llist.display();
+        llist.remove("b");
+        llist.display();
+        llist.findLast();
+        llist.dispReverse();
+
+        // 循环链表
+        class LoopNode {
+            constructor(element){
+                this.element = element;
+            }
+        }
+        class LoopList {
+            constructor(){
+                this.head = new LoopNode("head");
+                this.head.next = this.head;
+            }
+            find(element){
+                let currNode = this.head;
+                while(currNode.element != element){
+                    currNode = currNode.next;
+                }
+                return currNode;
+            }
+            findPro(element){
+                let proNode = this.head;
+                while(proNode.next.element != element){
+                    proNode = proNode.next;
+                }
+                console.log(proNode);
+                return proNode;
+            }
+            insert(newElement, element){
+                let newNode = new Node(newElement);
+                this.find(element).next = newNode;
+                console.log(newNode)
+            }
+            remove(element){
+                this.findPro(element).next = this.find(element).next;
+            }
+            display(){
+                let currNode = this.head;
+                while(!(currNode.next == null) && !(currNode.next.element == "head")){
+                    console.log(currNode.next.element);
+                    currNode = currNode.next;
+                }
+                return
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>队列</title>
+</head>
+<body>
+    <script>
+        // 普通队列
+        class Queue {
+            constructor(){
+                this.list = [];
+            }
+            push(element){
+                this.list.push(element);
+            }
+            shift(){
+                return this.list.shift();
+            }
+            front(){
+                return this.list[0];
+            }
+            back(){
+                return this.list[this.list.length-1];
+            }
+            display(){
+                return this.list.toString();
+            }
+            isEmpty(){
+                if (this.list.length == 0) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+        // 优先队列
+        class PriQueue {
+            constructor(element, priority){
+                this.element = element;
+                this.priority = priority;
+            }
+            push(element){
+                this.list.push(element);
+            }
+            shift(){
+                let priority = this.list[0].priority;
+                let index = 0;
+                for (let i = 0; i < this.list.length; i++) {
+                    if ( this.list[i].priority > priority ) {
+                        priority = this.list[i].priority;
+                        index = i;
+                    }
+                }
+                return this.list.splice(i,i+1)
+            }
+            display(){
+                return this.list.toString();
+            }
+            isEmpty(){
+                if (this.list.length == 0) {
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

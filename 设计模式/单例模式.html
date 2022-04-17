@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单例模式</title>
+</head>
+<body>
+    <script>
+        let ajax = ( function() {
+            let instance;
+            let xmlHttp;
+            console.log("once !!!")
+            function init(){
+                if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                } else {
+                    xmlHttp = new ActiveXObject();
+                }
+                return xmlHttp;
+            }
+            return function () {
+                if (instance == undefined) {
+                    instance = init();
+                }
+                return instance;
+            }
+        }) ()
+        console.log(ajax());
+        console.log(ajax());
+        console.log(ajax());
+    </script>
+</body>
+</html>

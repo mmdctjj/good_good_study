@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>栈</title>
+</head>
+<body>
+    <script>
+        class Stack {
+            constructor(){
+                this.list = [];
+                this.depth = 0;
+            }
+            push(element){
+                this.list[this.depth] = element;
+                this.depth += 1;
+            }
+            pop(){
+                this.depth -= 1;
+                return this.list[this.depth];
+            }
+            peek(){
+                return this.list[this.depth-1]
+            }
+            length(){
+                return this.depth;
+            }
+            clear(){
+                this.list = [];
+            }
+        }
+    </script>
+</body>
+</html>

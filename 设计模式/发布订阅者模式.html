@@ -1,0 +1,88 @@
+<!--
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-12 21:35:47
+ * @LastEditTime: 2019-08-13 11:01:54
+ * @LastEditors: Please set LastEditors
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [23,1,44,56,7,89,2];
+        function bubbSort(arr){
+            let temp;
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr.length - i; j++) {
+                    if (arr[j] > arr[j+1]) {
+                        temp = arr[j+1];
+                        arr[j+1] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            console.log(arr)
+            return arr
+        }
+        // fastSort(arr)
+        function selectSort(arr) {
+            let index, temp
+            for (let i = 0; i < arr.length; i++) {
+                temp = arr[i];
+                for (let j = i; j < arr.length; j++) {
+                    if (arr[j] < temp) {
+                        temp = arr[j];
+                        index = j;
+                    }
+                }
+                temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+            }
+            console.log(arr);
+            return arr;
+        }
+        // selectSort(arr)
+        function insertSort(arr) {
+            let temp;
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i; j > 0; j--) {
+                    if (arr[j] < arr[j-1]) {
+                        temp = arr[j];
+                        arr[j] = arr[j-1];
+                        arr[j-1] = temp;
+                    }
+                }
+            }
+            console.log(arr)
+            return arr
+        }
+        // insertSort(arr)
+        function fastSort(arr){
+            if (arr.length <= 1) {
+                return arr
+            }
+            let right = [],left = [];
+            let mid = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+                if (arr[i] < mid) {
+                    left.push(arr[i])
+                }else{
+                    right.push(arr[i])
+                }
+            }
+            return this.fastSort(left).concat(mid, this.fastSort(right))
+        }
+        console.log(fastSort(arr))
+    </script>
+</body>
+
+</html>

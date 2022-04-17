@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>排序算法</title>
+</head>
+
+<body>
+    <script>
+        // 测试数组
+        let arr = [24, 21, 55, 34, 26, 12, 1, 6, 2, 5];
+        // 冒泡排序
+        function bubbSort(arr) {
+            let temp;
+            for (let i = 0; i < arr.length - 1; i++) {
+                for (let j = 0; j < arr.length - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+        }
+        console.log("前", arr);
+        // bubbSort(arr);
+        // console.log("后",arr);
+        // 选择排序
+        function selectSort(arr) {
+            let index, temp;
+            for (let i = 0; i < arr.length; i++) {
+                temp = arr[i]
+                for (let j = i; j < arr.length; j++) {
+                    if (temp > arr[j]) {
+                        index = j;
+                        temp = arr[j];
+                    }
+                }
+                temp = arr[i];
+                arr[i] = arr[index];
+                arr[index] = temp;
+            }
+        }
+        // selectSort(arr)
+        // console.log("后",arr);
+        // 插入排序
+        function insertSort(arr) {
+            let temp;
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i; j > 0; j--) {
+                    if (arr[j] < arr[j - 1]) {
+                        temp = arr[j];
+                        arr[j] = arr[j - 1];
+                        arr[j - 1] = temp;
+                    }
+                }
+            }
+        }
+        // insertSort(arr);
+        // console.log("后",arr);
+        // 希尔排序
+        function shellSort(arr) {
+            let gaps = [4,3,2,1];
+            let temp;
+            for (let i = 0; i < gaps.length; i++) {
+                for (let j = 0; j < arr.length; j += gaps[i]) {
+                    for (let k = j; k > 0; k -= gaps[i]) {
+                        if (arr[j] < arr[j - gaps[i]]) {
+                            temp = arr[j];
+                            arr[j] = arr[j - gaps[i]];
+                            arr[j - gaps[i]] = temp;
+                        }
+                    }
+                }
+            }
+            return arr;
+        }
+        // shellSort(arr);
+        // console.log("后", shellSort(arr));
+        // 归并排序
+        function margeSort(arr) {
+            
+        }
+        margeSort(arr);
+        console.log("后", margeSort(arr));
+        // 快速排序
+        function fastSort(arr) {
+            if(arr.length <= 1) return arr;
+            let left = [], right = [], mid = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+                if (arr[i] < mid) {
+                    left.push(arr[i]);
+                }else{
+                    right.push(arr[i]);
+                }
+            }
+            return this.fastSort(left).concat(mid, this.fastSort(right));
+        }
+        // fastSort(arr);
+        // console.log("后", fastSort(arr));
+        // 基数排序
+        // 桶排序
+        // 堆排序
+    </script>
+</body>
+
+</html>

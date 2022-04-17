@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图与图算法</title>
+</head>
+<body>
+    <script>
+        // 图节点
+        class figure {
+            constructor(label){
+                // 图的标签
+                this.label = label;
+                // 相连的边
+                this.edge = 0;
+                // 是否被访问过
+                this.flag = false;
+                // 邻接表
+                this.adjacent = [];
+            }
+            // 添加新的连接
+            addAdj(newFigure){
+                this.adjacent.push(newFigure);
+                newFigure.adjacent.push(this);
+                this.edge ++;
+            }
+            // 搜索
+            // 深度优先搜索
+            search(){
+                // 向下一直搜索===>回溯
+                function find(arr){
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].edge != 0) {
+                            arr[i].flag = true;
+                            find(arr[i].adjacent);
+                        }
+                    }
+                }
+                find(this.adjacent)
+            }
+            // 广度优先搜索
+            // tostring
+            tostring(){}
+
+        }
+        console.log(new Date())
+    </script>
+</body>
+</html>

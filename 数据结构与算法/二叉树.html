@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>二叉树</title>
+</head>
+<body>
+    <script>
+        class Node {
+            constructor(element, left, right){
+                this.element = element;
+                this.left = left;
+                this.right = right;
+            }
+            show(){
+                return this.element;
+            }
+        }
+        class BST {
+            constructor(){
+                this.root = null;
+            }
+            insert(element){
+                let node = new Node(element, null, null);
+                if (this.root == null) {
+                    this.root = node;
+                }else{
+                    let currNode = this.root;
+                    let parent;
+                    while(true){
+                        if (currNode.element > element) {
+                            currNode = currNode.left;
+                            if (currNode.left == null) {
+                                currNode.left = node;
+                                break;
+                            }
+                        }else{
+                            currNode = currNode.right;
+                            if (currNode.right == null) {
+                                currNode.right = node;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            // 中序遍历
+            midOrder(node){
+                if (node != null) {
+                    this,midOrder(node.left);
+                    node.show();
+                    this.midOrder(node.right);
+                }
+            }
+            // 先序遍历
+            preOrder(){
+                if (node != null) {
+                    node.show();
+                    this,preOrder(node.left);
+                    this.preOrder(node.right);
+                }
+            }
+            // 后序遍历
+            afteOrder(){
+                if (node != null) {
+                    this,afteOrder(node.left);
+                    this.afteOrder(node.right);
+                    node.show();
+                }
+            }
+            // 寻找最小值
+            findMim(){
+                let currNode = this.root;
+                while (currNode.left != null) {
+                    currNode = currNode.left;
+                }
+                return currNode.element;
+            }
+            // 寻找最大值
+            findMax(){
+                let currNode = this.root;
+                while (currNode.right != null) {
+                    currNode = currNode.right;
+                }
+                return currNode.element;
+            }
+            // 寻找给定值
+            find(element){
+                let currNode = this.root;
+                while(currNode != null){
+                    if (currNode.element < element) {
+                        currNode = currNode.left;
+                    }else if(currNode.element > element){
+                        currNode = currNode.right;
+                    }else{
+                        return currNode;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
