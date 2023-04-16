@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中介者模式</title>
+</head>
+<body>
+    <script>
+        // 
+        
+        const mediator = (function () {
+            let topics = [], uuid = 0;
+
+            function subscribe (topic, callback) {
+                uuid ++
+                topics[topic] = topics[topic]
+                    ? [...topics[topic], { callback, uuid }]
+                    : [{ callback, uuid }]
+            }
+
+            function publish (topic, value) {
+                
+                if (topics[topic]) {
+                    topics[topic].map(item => item.callback(value))
+                }
+            }
+            return {
+                init: function (obj) {
+                    obj.uuid = uuid
+                    obj.publish = publish
+                    obj.subscribe = subscribe
+                    return obj
+                } 
+            }
+        })()
+
+        const subscribe1 = mediator.init({})
+        const subscribe2 = mediator.init({})
+        const subscribe3 = mediator.init({})
+
+        subscribe1.subscribe('data.name', (value) => console.log('我是subscribe1', value))
+        subscribe2.subscribe('data.name', (value) => console.log('我是subscribe3', value))
+
+        const data = { name: '萌萌哒草头将军', age: 18 }
+
+        Object.defineProperty(data, 'name', {
+            get: () => this.name,
+            set: (newValue) => {
+                subscribe3.publish('data.name', newValue)
+                this.name = newValue;
+            }
+        })
+
+        data.name = 'mmdctjj'
+    </script>
+</body>
+</html>

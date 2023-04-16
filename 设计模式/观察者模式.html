@@ -1,7 +1,86 @@
-<!--
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-08-12 21:36:15
- * @LastEditTime: 2019-08-12 21:58:50
- * @LastEditors: Please set LastEditors
- -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>观察者模式</title>
+</head>
+
+<body>
+    <script>
+
+        class Observer {
+            constructor(code) {
+                this.code = code;
+            }
+            update() {
+                console.log('我是：', this.code, '我知道我该更新了')
+            }
+        }
+
+        class Suject {
+            constructor() {
+                this.observerList = [];
+            }
+
+            addObserver(observer) {
+                this.observerList.push(observer)
+            }
+
+            notify() {
+                this.observerList.map((observer) => observer.update())
+            }
+        }
+
+        // 具体的观察者
+        const concreteObservver1 = new Observer('concreteObservver1');
+        const concreteObservver2 = new Observer('concreteObservver2');
+        const concreteObservver3 = new Observer('concreteObservver3');
+        const concreteObservver4 = new Observer('concreteObservver4');
+
+        // 具体的目标
+        const concreteSuject1 = new Suject();
+        const concreteSuject2 = new Suject();
+
+        // 具体的对应关系
+        concreteSuject1.addObserver(concreteObservver1);
+        concreteSuject1.addObserver(concreteObservver2);
+
+        // 具体的对应关系
+        concreteSuject2.addObserver(concreteObservver3);
+        concreteSuject2.addObserver(concreteObservver4);
+
+        const data = { name: '萌萌哒草头将军', age: 18 }
+
+        // 当data的name属性变化，对应的观察者concreteObservver1、
+        // concreteObservver2就会被广播事件通知，从而更新
+        Object.defineProperty(data, 'name', {
+            get: () => this.name,
+            set: (newValue) => {
+                concreteSuject1.notify();
+                this.name = newValue;
+            }
+        })
+
+        // 当data的age属性变化，对应的观察者concreteObservver3、
+        // concreteObservver4就会被广播事件通知，从而更新
+        Object.defineProperty(data, 'age', {
+            get: () => this.age,
+            set: (newValue) => {
+                concreteSuject2.notify();
+                this.age = newValue;
+            }
+        })
+
+        data.name = 'mmdctjj'
+        // 我是： concreteObservver1 我知道我该更新了
+        // 我是： concreteObservver2 我知道我该更新了
+        data.age = 18
+// 我是： concreteObservver3 我知道我该更新了
+// 我是： concreteObservver4 我知道我该更新了
+    </script>
+</body>
+
+</html>
