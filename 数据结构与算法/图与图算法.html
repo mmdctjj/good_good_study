@@ -8,44 +8,86 @@
 </head>
 <body>
     <script>
-        // 图节点
-        class figure {
-            constructor(label){
-                // 图的标签
-                this.label = label;
-                // 相连的边
-                this.edge = 0;
-                // 是否被访问过
-                this.flag = false;
-                // 邻接表
-                this.adjacent = [];
+        class Vertex {
+            constructor (label, wasVisited = false) {
+                this.label = label
+                // ...others props
             }
-            // 添加新的连接
-            addAdj(newFigure){
-                this.adjacent.push(newFigure);
-                newFigure.adjacent.push(this);
-                this.edge ++;
-            }
-            // 搜索
-            // 深度优先搜索
-            search(){
-                // 向下一直搜索===>回溯
-                function find(arr){
-                    for (let i = 0; i < arr.length; i++) {
-                        if (arr[i].edge != 0) {
-                            arr[i].flag = true;
-                            find(arr[i].adjacent);
-                        }
-                    }
-                }
-                find(this.adjacent)
-            }
-            // 广度优先搜索
-            // tostring
-            tostring(){}
-
         }
-        console.log(new Date())
+
+        class Graph {
+            constructor(vertexNumber) {
+                this.vertexs = []
+                this.edges = {}
+                this.visited = {}
+                this.marked = {}
+                this.pathTo = {}
+            }
+
+            // 增加节点
+            addNodes (label) {
+                this.vertexs.push(new Vertex(label))
+                this.edges[label] = []
+                this.marked[label] = false
+            }
+            // 增加边
+            addEdges (source, target) {
+                // 分别给对方的邻接表添加边
+                this.edges[source].push(target)
+                this.edges[target].push(source)
+            }
+            // 展示图
+            showGraoh () {
+                this.vertexs.forEach(vertex => console.log(vertex.label, '->', this.edges[vertex.label].toString()))
+            }
+
+            // 深度优先搜索
+            dfs (label) {
+                this.visited[label] = true
+                console.log('dfs', label)
+                this.edges[label].forEach(edge => {
+                    if (!this.visited[edge]) this.dfs(edge)
+                })
+            }
+
+            // 广度优先搜索
+            bfs (label) {
+                const queue = []
+                this.marked[label] = true
+                queue.push(label)
+                console.log('bfs', label)
+                while (queue.length) {
+                    const label_ = queue.shift()
+                    this.edges[label_].forEach(edge => {
+                        
+                        if (!this.marked[edge]) {
+                            this.pathTo[edge] = label_
+                            this.marked[edge] = true
+                            console.log('bfs', edge)
+                            queue.push(edge)
+                        }
+                    })
+                }
+                console.log(this.pathTo)
+            }
+        }
+
+        const graph = new Graph();
+
+        [1, 2, 3, 4, 5, 6].forEach((n) => graph.addNodes(n))
+
+        graph.addEdges(1, 2)
+        graph.addEdges(1, 3)
+        graph.addEdges(1, 4)
+        graph.addEdges(3, 4)
+        graph.addEdges(2, 5)
+        graph.addEdges(5, 6)
+
+        graph.showGraoh()
+        graph.dfs(1)
+        console.log(`<=========>`)
+        graph.bfs(1)
+        
     </script>
 </body>
 </html>
