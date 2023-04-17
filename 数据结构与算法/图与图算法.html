@@ -21,7 +21,7 @@
                 this.edges = {}
                 this.visited = {}
                 this.marked = {}
-                this.pathTo = {}
+                this.edgeTo = {}
             }
 
             // 增加节点
@@ -61,14 +61,21 @@
                     this.edges[label_].forEach(edge => {
                         
                         if (!this.marked[edge]) {
-                            this.pathTo[edge] = label_
+                            this.edgeTo[edge] = label_
                             this.marked[edge] = true
                             console.log('bfs', edge)
                             queue.push(edge)
                         }
                     })
                 }
-                console.log(this.pathTo)
+                console.log(this.edgeTo)
+            }
+
+            pathTo (label) {
+                const source = this.vertexs[0]
+                if (this.marked[label]) {
+                    
+                }
             }
         }
 
