@@ -9,8 +9,8 @@
 <body>
     <script>
         class Vertex {
-            constructor (label, wasVisited = false) {
-                this.label = label
+            constructor (uuid, wasVisited = false) {
+                this.uuid = uuid
                 // ...others props
             }
         }
@@ -25,10 +25,10 @@
             }
 
             // 增加节点
-            addNodes (label) {
-                this.vertexs.push(new Vertex(label))
-                this.edges[label] = []
-                this.marked[label] = false
+            addNodes (uuid) {
+                this.vertexs.push(new Vertex(uuid))
+                this.edges[uuid] = []
+                this.marked[uuid] = false
             }
             // 增加边
             addEdges (source, target) {
@@ -38,30 +38,30 @@
             }
             // 展示图
             showGraoh () {
-                this.vertexs.forEach(vertex => console.log(vertex.label, '->', this.edges[vertex.label].toString()))
+                this.vertexs.forEach(vertex => console.log(vertex.uuid, '->', this.edges[vertex.uuid].toString()))
             }
 
             // 深度优先搜索
-            dfs (label) {
-                this.visited[label] = true
-                console.log('dfs', label)
-                this.edges[label].forEach(edge => {
+            dfs (uuid) {
+                this.visited[uuid] = true
+                console.log('dfs', uuid)
+                this.edges[uuid].forEach(edge => {
                     if (!this.visited[edge]) this.dfs(edge)
                 })
             }
 
             // 广度优先搜索
-            bfs (label) {
+            bfs (uuid) {
                 const queue = []
-                this.marked[label] = true
-                queue.push(label)
-                console.log('bfs', label)
+                this.marked[uuid] = true
+                queue.push(uuid)
+                console.log('bfs', uuid)
                 while (queue.length) {
-                    const label_ = queue.shift()
-                    this.edges[label_].forEach(edge => {
+                    const uuid_ = queue.shift()
+                    this.edges[uuid_].forEach(edge => {
                         
                         if (!this.marked[edge]) {
-                            this.edgeTo[edge] = label_
+                            this.edgeTo[edge] = uuid_
                             this.marked[edge] = true
                             console.log('bfs', edge)
                             queue.push(edge)
@@ -71,11 +71,21 @@
                 console.log(this.edgeTo)
             }
 
-            pathTo (label) {
-                const source = this.vertexs[0]
-                if (this.marked[label]) {
-                    
+            pathTo (uuid) {
+                const source = this.vertexs[0].uuid
+                const path = []
+                if (this.marked[uuid]) {
+                    for(let i = uuid; i !== source; i = this.edgeTo[i]) {
+                        path.push(i)
+                    }
                 }
+                path.push(source)
+                return path
+            }
+
+            printMinPathTo (uuid) {
+                const path = this.pathTo(uuid).join('->')
+                console.log(path)
             }
         }
 
@@ -94,6 +104,8 @@
         graph.dfs(1)
         console.log(`<=========>`)
         graph.bfs(1)
+
+        graph.printMinPathTo(6)
         
     </script>
 </body>
