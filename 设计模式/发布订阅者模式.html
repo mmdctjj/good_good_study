@@ -17,71 +17,69 @@
 
 <body>
     <script>
-        let arr = [23,1,44,56,7,89,2];
-        function bubbSort(arr){
-            let temp;
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr.length - i; j++) {
-                    if (arr[j] > arr[j+1]) {
-                        temp = arr[j+1];
-                        arr[j+1] = arr[j];
-                        arr[j] = temp;
-                    }
+        class PubSub {
+            constructor() {
+                this.topics = {}
+                this.uuid = 0
+            }
+
+            publish(topic, value) {
+                if (this.topics[topic]) {
+                    this.topics[topic].map(({ event }) => event(value))
                 }
             }
-            console.log(arr)
-            return arr
+
+            subscribe(topic, event) {
+                const uuid = this.uuid++
+                this.topics[topic] = this.topics[topic] ? [...this.topics[topic], { event, uuid }] : [{ event, uuid }]
+
+            }
         }
-        // fastSort(arr)
-        function selectSort(arr) {
-            let index, temp
-            for (let i = 0; i < arr.length; i++) {
-                temp = arr[i];
-                for (let j = i; j < arr.length; j++) {
-                    if (arr[j] < temp) {
-                        temp = arr[j];
-                        index = j;
-                    }
+
+        const MyPubSub = (function () {
+            let instance;
+            function init() {
+                return new PubSub();
+            }
+
+            return function () {
+                if (!instance) {
+                    instance = init();
                 }
-                temp = arr[i];
-                arr[i] = arr[index];
-                arr[index] = temp;
+                return instance;
             }
-            console.log(arr);
-            return arr;
-        }
-        // selectSort(arr)
-        function insertSort(arr) {
-            let temp;
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = i; j > 0; j--) {
-                    if (arr[j] < arr[j-1]) {
-                        temp = arr[j];
-                        arr[j] = arr[j-1];
-                        arr[j-1] = temp;
-                    }
-                }
+        })()
+
+        const myPubSub = new MyPubSub()
+
+        const data = { name: '萌萌哒草头将军', age: 18 }
+
+        myPubSub.subscribe('data.name', (value) => console.log('我知道了', 'name发生变化了:', value))
+        myPubSub.subscribe('data.name', (value) => console.log('我也知道了', 'name发生变化了:', value))
+        myPubSub.subscribe('data.age', (value) => console.log('我知道了', 'age发生变化了:', value))
+
+        Object.defineProperty(data, 'name', {
+            get: () => this.name,
+            set: (newValue) => {
+                myPubSub.publish('data.name', newValue)
+                this.name = newValue;
             }
-            console.log(arr)
-            return arr
-        }
-        // insertSort(arr)
-        function fastSort(arr){
-            if (arr.length <= 1) {
-                return arr
+        })
+
+        Object.defineProperty(data, 'age', {
+            get: () => this.age,
+            set: (newValue) => {
+                myPubSub.publish('data.age', newValue)
+                this.age = newValue;
             }
-            let right = [],left = [];
-            let mid = arr[0];
-            for (let i = 1; i < arr.length; i++) {
-                if (arr[i] < mid) {
-                    left.push(arr[i])
-                }else{
-                    right.push(arr[i])
-                }
-            }
-            return this.fastSort(left).concat(mid, this.fastSort(right))
-        }
-        console.log(fastSort(arr))
+        })
+
+        data.name = 'mmdctjj'
+        // 我知道了 name发生变化了: mmdctjj
+        // 我也知道了 name发生变化了: mmdctjj
+        data.age = 18
+        // 我知道了 age发生变化了: 18
+
     </script>
 </body>
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>策略模式</title>
+</head>
+<body>
+    <script>
+        class Strategy {
+            constructor() {
+                this.strategy = {} // JavaScript的策略模式可以通过对象来巧妙实现
+            }
+
+            addStrategy(name, callback) {
+                this.strategy[name] = callback
+            }
+
+            execute(name, args) {
+                this.strategy[name]?.(args)
+            }
+        }
+
+        // good
+        let arr = [1, 2, 3]
+
+        const strategy = new Strategy()
+
+        strategy.addStrategy(1, () => console.log(11))
+        strategy.addStrategy(2, () => console.log(22))
+        strategy.addStrategy(3, () => console.log(33))
+
+        arr.map(a => strategy.execute(a, 'your args'))
+    </script>
+</body>
+</html>

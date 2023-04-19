@@ -98,6 +98,17 @@
           height: calc(25vw - 50px);
         }
       }
+      @keyframes heightFall {
+        40% {
+          height: 80px;
+        }
+        50% {
+          height: 90px;
+        }
+        70% {
+          height: calc(25vw - 50px);
+        }
+      }
       @keyframes width {
         0% {
           width: 0px;
@@ -180,7 +191,7 @@
                     setTimeout(() => {
                       child.style.transition = 'bottom 0.8s ease-in-out, top 0.8s ease'
                       child.style.bottom = child.style.bottom === '65%' ? '5%' : '65%'
-                      child.style.animation = child.style.bottom === '65%' ? `height 1s ease ${delay}ms 1` : ''
+                      child.style.animation = child.style.bottom === '65%' ? `height 1s ease ${delay}ms 1` : `heightFall 1s ease ${delay}ms 1`
                     }, delay)
                     delay = 100
                   } else if (child.className === 'list') {
@@ -196,7 +207,7 @@
               },
               clickList (dom, flag) {
                 this.flag = !this.flag
-                dom.style.transition = 'width 0.8s, height 0.8s, left 0.6s, zIndex 0.5s'
+                dom.style.transition = 'width 0.8s, height 0.8s, left 0.6s, zIndex 0.5s, top 0.8s'
                 if (flag === 'left') {
                   if (dom.style.height === '20%' || dom.style.height === '') {
                     this.lShow = true
@@ -205,8 +216,9 @@
                     setTimeout(() => {
                       dom.style.left = '0px'
                     }, 200)
+                    dom.style.top = '0px'
                     dom.style.width = 'calc(100vw - 40px)'
-                    dom.style.height = '50vh'
+                    dom.style.height = '90vh'
                   } else {
                     this.lShow = false
                     dom.style.left = '20vw'
@@ -216,6 +228,7 @@
                     setTimeout(() => {
                       dom.style.zIndex = '10'
                     }, 400)
+                    dom.style.top = '35%'
                     dom.style.width = 'calc(50vw - 40px)'
                     dom.style.height = '20%'
                   }
@@ -227,8 +240,9 @@
                     setTimeout(() => {
                       dom.style.left = '0px'
                     }, 200)
+                    dom.style.top = '0px'
                     dom.style.zIndex = '100'
-                    dom.style.height = '50vh'
+                    dom.style.height = '90vh'
                   } else {
                     this.rShow = false
                     dom.style.left = '10vw'
@@ -238,6 +252,7 @@
                     setTimeout(() => {
                       dom.style.zIndex = '10'
                     }, 400)
+                    dom.style.top = '35%'
                     dom.style.width = 'calc(50vw - 40px)'
                     dom.style.height = '20%'
                   }

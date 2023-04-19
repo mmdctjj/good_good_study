@@ -23,6 +23,12 @@
     .radius {
       border-radius: 10px;
     }
+    .flex-column {
+      height: 10vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
   </style>
 </head>
 <body>
@@ -38,9 +44,9 @@
       <div class="bg margin padding radius" style="width: 68vw;height: 10vh;">
         <!-- {{item}} -->
       </div>
-      <div style="height: 10vh;">
-        <div @click="onAdd({id: item})" class="bg margin padding radius">标记</div>
-        <div @click="onDel(item.id)" class="bg margin padding radius">清标</div>
+      <div class="flex-column">
+        <div @click="onAdd({id: item})" class="bg margin padding radius" style="height: 5vh;">标记</div>
+        <div @click="onDel(item.id)" class="bg margin padding radius" style="height: 5vh;">清标</div>
       </div>
     </div>
   

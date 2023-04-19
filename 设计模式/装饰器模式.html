@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>装饰器模式</title>
+</head>
+<body>
+    <script>
+        class YourClass {
+            constructor () {
+                this.number = 0
+            }
+
+            count () {
+                this.number ++
+                return this.number
+            }
+        }
+
+        class Decorater {
+            constructor (other) {
+                this.number = other.number + 66
+            }
+
+            count () {
+                this.number = this.number + 100
+                return this.number
+            }
+        }
+
+        const yourClass = new YourClass()
+        const decorater = new Decorater(yourClass)
+
+        console.log(yourClass.count(), 'yourClass')
+        console.log(decorater.count(), 'decorater')
+        console.log(yourClass.count(), 'yourClass')
+        console.log(decorater.count(), 'decorater')
+    </script>
+</body>
+</html>
