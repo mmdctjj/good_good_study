@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>外观模式</title>
+</head>
+<body>
+  <script>
+    const books = ['a', 'b', 'c']
+    const courses = ['d', 'e', 'f']
+    const colleges = ['g', 'h', 'i']
+
+    let id = 'e'
+
+    let name
+
+    if (books.find(code =>  code === id)) {
+      name = 'book'
+    } else if (courses.find(code => code === id)) {
+      name = 'course'
+    } else if (colleges.find(code => code === id)) {
+      name = 'college'
+    } else {
+      name = undefined
+    }
+    console.log(name)
+
+    const findName = (id) => {
+      if (books.find(code =>  code === id)) {
+        return 'book'
+      } else if (courses.find(code => code === id)) {
+        return 'course'
+      } else if (colleges.find(code => code === id)) {
+        return 'college'
+      } else {
+        return undefined
+      }
+    }
+
+    const name_ = findName(id)
+    console.log(name_)
+  </script>
+</body>
+</html>

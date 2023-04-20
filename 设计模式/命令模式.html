@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>命令模式</title>
+</head>
+<body>
+  <script>
+    class HandleManager {
+      doOne (one) {console.log('do:', one)}
+      doTwo (one, two) {console.log('do:', one, 'and', two)}
+
+      excute(name) {
+        HandleManager.prototype[name].call(this, ...Array.prototype.slice.call(arguments, 1))
+      }
+    }
+
+    const handleManager = new HandleManager()
+
+    handleManager.doOne('book') // do: book
+    handleManager.doTwo('book', 'draw') // do: book and draw
+
+    handleManager.excute('doOne', 'book')
+    handleManager.excute('doTwo', 'book', 'draw')
+
+  </script>
+</body>
+</html>
