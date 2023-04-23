@@ -8,45 +8,111 @@
 </head>
 <body>
   <script>
-    class HandleManager {
-      doOne (one) {console.log('do:', one)}
-      doTwo (one, two) {console.log('do:', one, 'and', two)}
+    // class HandleManager {
+    //   doOne (one) {console.log('do:', one)}
+    //   doTwo (one, two) {console.log('do:', one, 'and', two)}
 
-      excute(name) {
-        HandleManager.prototype[name].call(this, ...Array.prototype.slice.call(arguments, 1))
-      }
-    }
+    //   excute(name) {
+    //     HandleManager.prototype[name].call(this, ...Array.prototype.slice.call(arguments, 1))
+    //   }
+    // }
 
-    const handleManager = new HandleManager()
+    // const handleManager = new HandleManager()
 
-    handleManager.doOne('book') // do: book
-    handleManager.doTwo('book', 'draw') // do: book and draw
+    // handleManager.doOne('book') // do: book
+    // handleManager.doTwo('book', 'draw') // do: book and draw
 
-    handleManager.excute('doOne', 'book')
-    handleManager.excute('doTwo', 'book', 'draw')
+    // handleManager.excute('doOne', 'book')
+    // handleManager.excute('doTwo', 'book', 'draw')
 
     class Receiver {
-      constructor (name) {
+      
+      constructor (name, specialSkill) {
         this.name = name
+        this.specialSkill = specialSkill
       }
 
-      
+      useSpecialSkill () {
+        console.log(this.name, '双手合十，口念：“阿弥陀佛”，随后使出了他的看家本领', this.specialSkill)
+      }
     }
     class Invoker {
 
       constructor () {
         this.commmandList = []
       }
-      addCommand (receiver, action) {}
 
-      clearAllCommand () {}
-
-      cancelCommand () {}
+      addCommand (command) {
+        console.log('如来说：亲，你点的', command.receiver.name, '给你安排了')
+        this.commmandList.push(command)
+      }
 
       excuteCommand () {
-
+        console.log('如来捏了个兰花指，然后打了个响指，空空、戒戒、沙沙分别走了上来')
+        this.commmandList.map(command => command.excute())
       }
     }
+
+    class Command {
+
+      constructor (receiver) {
+        console.log('"给我来一个', receiver.name, '"')
+        this.receiver = receiver
+      }
+
+      excute () {
+        this.receiver.useSpecialSkill()
+      }
+
+    }
+
+    // client 客户端
+
+    console.log('夕阳西下，唐唐拖着长长的背影，走进了灵山白金翰佛堂。')
+    
+    console.log('几个苦行僧打扮的服务员迎了上来，双手合十，鞠躬道：“阿弥陀佛，施主想来些啥？”')
+
+    console.log('唐唐嚣张的骂道：“啥档次，跟我一样说阿弥陀佛，把你们老板叫出来！”')
+
+    console.log('如来听到唐唐的声音，边穿衣服边对身边的白骨精说道：“你稍等片刻，我去去就来”。随后夺门而出。')
+
+    console.log('如来迎了上啦，拉住唐唐的手道：')
+
+    console.log('老弟好久没来了啊，有失远迎，还请见谅啊！！！')
+
+    console.log('“我佛慈悲，出家人怎会计较这些，弟子马上要出发了，来这里买几个徒弟，路上消遣，岂不美哉”')
+
+    console.log('如来从身后拿出了ipad，递给唐唐，“你选吧”')
+
+    console.log('唐唐接过平板，看着每页的图片，边点边念叨到：')
+
+    const kongkong = new Receiver('空空', '连续72个后空翻')
+    const jiejie = new Receiver('戒戒', '36种不同姿势钢管舞')
+    const shasha = new Receiver('沙沙', '萨克斯')
+
+    
+    // 给我来一个空空，我看看他的看家本领怎么样
+    const command1 = new Command(kongkong)
+    
+    // 再给我来一个戒戒，我想看看他的看家本领怎么样
+    const command2 = new Command(jiejie)
+    
+    // 最后再给我来一个沙沙，我想看看他的看家本领怎么样
+    const command3 = new Command(shasha)
+
+    // 如来
+    const invoker = new Invoker()
+    
+    // 如来说：亲，你要一个空空、沙沙、戒戒，分别看看他的看家本领，好的，给你安排了
+    invoker.addCommand(command1)
+    invoker.addCommand(command2)
+    invoker.addCommand(command3)
+    console.log('唐唐：”好的，这些我先看看他们的本领怎么样“')
+    
+    // 如来翘起了兰花指，然后打了个响指，空空、戒戒、沙沙分别走了上来
+    invoker.excuteCommand()
+    console.log('唐唐满意的点了点头：”好的，爷不差钱，这些个挺不错的，俺都要了!!!“')
+    console.log('如来说：“如果觉得好用，回头记得一键三连哦～”')
 
   </script>
 </body>
