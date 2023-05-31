@@ -1,4 +1,7 @@
 # welcome my space of study
+### 欢迎关注我的微信公众号
+
+![mmdctjj.jpg](/mmdctjj.jpg?)
 
 ### 写作计划
 - [x] vue动画 --[优美的v-for列表加载动画：vue动画钩子实践](https://juejin.cn/post/6869195042599206919)
