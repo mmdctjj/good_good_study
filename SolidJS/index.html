@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SolidJS</title>
+</head>
+<body>
+  <h1>打开控制台查看结果</h1>
+  <script src="./solid.js"></script>
+  <script>
+    const [count, setCount] = createSignal(1);
+    const increment = () => setCount(count() + 1);
+    createEffect(() => console.log('count : ', count()))
+
+    const sum = createMemo(() => count() + 2)
+    createEffect(() => console.log('sum : ', sum()))
+
+    window.increment = increment
+  </script>
+</body>
+</html>
